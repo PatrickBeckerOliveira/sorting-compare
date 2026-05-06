@@ -141,7 +141,7 @@ int main()
     char nomes[MAX_FILES][MAX_NAME];
     int qtd = 0;
 
-    printf("nomes dos arquivos separados por espaço: ");
+    printf("nomes dos arquivos separados por espaco: ");
 
     fgets(linha, sizeof(linha), stdin);
 
