@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdbool.h>
 
+#define MAX_FILES 100
+#define MAX_NAME 50
+#define MAX_LINE 1024
 #define MAX 100000
 
 // ================= LEITURA =================
@@ -134,19 +137,22 @@ long countingSort(int arr[], int n)
 // ================= MAIN =================
 int main()
 {
-    char nomes[100][50];  // até 100 arquivos
+    char linha[MAX_LINE];
+    char nomes[MAX_FILES][MAX_NAME];
     int qtd = 0;
 
-    printf("Digite os nomes dos arquivos (digite 'fim' para terminar):\n");
+    printf("nomes dos arquivos separados por espaço: ");
 
-    while (1)
+    fgets(linha, sizeof(linha), stdin);
+
+    linha[strcspn(linha, "\n")] = '\0';
+
+    char *token = strtok(linha, " ");
+    while (token != NULL && qtd < MAX_FILES)
     {
-        scanf("%s", nomes[qtd]);
-
-        if (strcmp(nomes[qtd], "fim") == 0)
-            break;
-
+        strcpy(nomes[qtd], token);
         qtd++;
+        token = strtok(NULL, " ");
     }
 
     FILE *html = fopen("resultado.html", "w");
@@ -156,7 +162,7 @@ int main()
 
     for (int i = 0; i < qtd; i++)
     {
-        int v[100000], v2[100000], v3[100000];
+        int v[MAX], v2[MAX], v3[MAX];
 
         int n = lerArquivo(nomes[i], v);
         if (n <= 0) continue;
